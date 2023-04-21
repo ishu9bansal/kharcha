@@ -20,6 +20,7 @@ let gisInited = false;
 
 document.getElementById('authorize_button').style.visibility = 'hidden';
 document.getElementById('signout_button').style.visibility = 'hidden';
+document.getElementById('refresh_data').style.visibility = 'hidden';
 
 /**
  * Callback after api.js is loaded.
@@ -97,6 +98,7 @@ function handleSignoutClick() {
     document.getElementById('content').innerText = '';
     document.getElementById('authorize_button').innerText = 'Authorize';
     document.getElementById('signout_button').style.visibility = 'hidden';
+    document.getElementById('refresh_data').style.visibility = 'hidden';
   }
 }
 
@@ -144,4 +146,5 @@ async function listMajors() {
   }
   
   document.getElementById('content').appendChild(createTable(range.values));
+  document.getElementById('refresh_data').style.visibility = 'visible';
 }
