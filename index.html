@@ -1,22 +1,51 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Sheets API Quickstart</title>
-    <meta charset="utf-8" />
-  </head>
-  <body>
-    <p>Sheets API Quickstart</p>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Daily Expense Tracker</h1>
+    <form id="expense-form">
+        <input type="hidden" id="expense-id">
+        
+        <label for="date">Date:</label>
+        <input type="date" id="date" required>
+        
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" required>
+        
+        <label for="description">Description:</label>
+        <input type="text" id="description" required>
+        
+        <label for="category">Category:</label>
+        <input type="text" id="category" required>
+        
+        <label for="payment-mode">Payment Mode:</label>
+        <input type="text" id="payment-mode">
+        
+        <label for="recurring">Recurring:</label>
+        <input type="checkbox" id="recurring">
+        
+        <label for="beneficiary">Beneficiary:</label>
+        <select id="beneficiary">
+            <option value="Self">Self</option>
+            <option value="Family">Family</option>
+            <option value="Friends">Friends</option>
+            <option value="Vehicle">Vehicle</option>
+        </select>
+        
+        <label for="tags">Tags:</label>
+        <input type="text" id="tags">
+        
+        <button type="submit" id="submit-btn">Add Expense</button>
+    </form>
 
-    <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
-    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
-    <button id="refresh_data" onclick="listMajors()">Sync</button>
+    <h2>Expense List</h2>
+    <ul id="expense-list"></ul>
 
-
-    <pre id="content" style="white-space: pre-wrap;"></pre>
-
-    <script type="text/javascript" src="index.js"></script>
-    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
-  </body>
+    <script src="script.js"></script>
+</body>
 </html>
