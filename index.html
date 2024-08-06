@@ -17,25 +17,43 @@
         <label for="amount">Amount:</label>
         <input type="number" id="amount" required>
         
-        <label for="description">Description:</label>
-        <input type="text" id="description" required>
+        <label for="title">Title:</label>
+        <input type="text" id="title" required>
         
         <label for="category">Category:</label>
-        <input type="text" id="category" required>
+        <div id="category-options">
+            <label><input type="radio" name="category" value="Entertainment"> Entertainment</label>
+            <label><input type="radio" name="category" value="Food"> Food</label>
+            <label><input type="radio" name="category" value="Groceries"> Groceries</label>
+            <label><input type="radio" name="category" value="Gift"> Gift</label>
+            <label><input type="radio" name="category" value="Apparel"> Apparel</label>
+            <label><input type="radio" name="category" value="Self Care"> Self Care</label>
+            <label><input type="radio" name="category" value="Donation"> Donation</label>
+            <label><input type="radio" name="category" value="Capital Expense"> Capital Expense</label>
+            <label><input type="radio" name="category" value="Travel"> Travel</label>
+            <label><input type="radio" name="category" value="Repair"> Repair</label>
+            <label><input type="radio" name="category" value="Medical"> Medical</label>
+            <label><input type="radio" name="category" value="Miscellaneous"> Miscellaneous</label>
+            <label><input type="radio" name="category" value="Petrol"> Petrol</label>
+            <input type="text" id="new-category" placeholder="Add New Category">
+        </div>
         
         <label for="payment-mode">Payment Mode:</label>
-        <input type="text" id="payment-mode">
+        <div id="payment-mode-options">
+            <label><input type="radio" name="payment-mode" value="Cash"> Cash</label>
+            <label><input type="radio" name="payment-mode" value="Digital"> Digital</label>
+        </div>
         
         <label for="recurring">Recurring:</label>
         <input type="checkbox" id="recurring">
         
         <label for="beneficiary">Beneficiary:</label>
-        <select id="beneficiary">
-            <option value="Self">Self</option>
-            <option value="Family">Family</option>
-            <option value="Friends">Friends</option>
-            <option value="Vehicle">Vehicle</option>
-        </select>
+        <div id="beneficiary-options">
+            <label><input type="radio" name="beneficiary" value="Self"> Self</label>
+            <label><input type="radio" name="beneficiary" value="Family"> Family</label>
+            <label><input type="radio" name="beneficiary" value="Friends"> Friends</label>
+            <label><input type="radio" name="beneficiary" value="Vehicle"> Vehicle</label>
+        </div>
         
         <label for="tags">Tags:</label>
         <input type="text" id="tags">

@@ -5,22 +5,26 @@ document.addEventListener('DOMContentLoaded', function () {
     const expenseIdInput = document.getElementById('expense-id');
     const dateInput = document.getElementById('date');
     const amountInput = document.getElementById('amount');
-    const descriptionInput = document.getElementById('description');
-    const categoryInput = document.getElementById('category');
-    const paymentModeInput = document.getElementById('payment-mode');
+    const titleInput = document.getElementById('title');
+    const categoryInputs = document.getElementsByName('category');
+    const newCategoryInput = document.getElementById('new-category');
+    const paymentModeInputs = document.getElementsByName('payment-mode');
     const recurringInput = document.getElementById('recurring');
-    const beneficiaryInput = document.getElementById('beneficiary');
+    const beneficiaryInputs = document.getElementsByName('beneficiary');
     const tagsInput = document.getElementById('tags');
     const submitBtn = document.getElementById('submit-btn');
 
     let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+    // Set default date to today
+    dateInput.value = new Date().toISOString().split('T')[0];
 
     function renderExpenses() {
         expenseList.innerHTML = '';
         expenses.forEach((expense, index) => {
             const li = document.createElement('li');
             li.innerHTML = `
-                ${expense.date} - $${expense.amount} - ${expense.description} - ${expense.category} - ${expense.paymentMode} - ${expense.recurring ? 'Recurring' : 'One-time'} - ${expense.beneficiary} - Tags: ${expense.tags.join(', ')}
+                ${expense.date} - $${expense.amount} - ${expense.title} - ${expense.category} - ${expense.paymentMode} - ${expense.recurring ? 'Recurring' : 'One-time'} - ${expense.beneficiary} - Tags: ${expense.tags.join(', ')}
                 <button class="edit" data-index="${index}">Edit</button>
                 <button class="delete" data-index="${index}">Delete</button>
             `;
@@ -37,20 +41,44 @@ document.addEventListener('DOMContentLoaded', function () {
         const expenseId = expenseIdInput.value;
         const date = dateInput.value;
         const amount = amountInput.value;
-        const description = descriptionInput.value;
-        const category = categoryInput.value;
-        const paymentMode = paymentModeInput.value;
+        const title = titleInput.value;
+        let category = '';
+        for (const input of categoryInputs) {
+            if (input.checked) {
+                category = input.value;
+                break;
+            }
+        }
+        if (!category && newCategoryInput.value) {
+            category = newCategoryInput.value;
+            const newOption = document.createElement('label');
+            newOption.innerHTML = `<input type="radio" name="category" value="${category}"> ${category}`;
+            document.getElementById('category-options').appendChild(newOption);
+        }
+        let paymentMode = '';
+        for (const input of paymentModeInputs) {
+            if (input.checked) {
+                paymentMode = input.value;
+                break;
+            }
+        }
         const recurring = recurringInput.checked;
-        const beneficiary = beneficiaryInput.value;
+        let beneficiary = '';
+        for (const input of beneficiaryInputs) {
+            if (input.checked) {
+                beneficiary = input.value;
+                break;
+            }
+        }
         const tags = tagsInput.value.split(',').map(tag => tag.trim());
 
         if (expenseId) {
             const index = parseInt(expenseId, 10);
-            expenses[index] = { date, amount, description, category, paymentMode, recurring, beneficiary, tags };
+            expenses[index] = { date, amount, title, category, paymentMode, recurring, beneficiary, tags };
             expenseIdInput.value = '';
             submitBtn.textContent = 'Add Expense';
         } else {
-            expenses.push({ date, amount, description, category, paymentMode, recurring, beneficiary, tags });
+            expenses.push({ date, amount, title, category, paymentMode, recurring, beneficiary, tags });
         }
 
         saveExpenses();
@@ -65,11 +93,27 @@ document.addEventListener('DOMContentLoaded', function () {
             expenseIdInput.value = index;
             dateInput.value = expense.date;
             amountInput.value = expense.amount;
-            descriptionInput.value = expense.description;
-            categoryInput.value = expense.category;
-            paymentModeInput.value = expense.paymentMode;
+            titleInput.value = expense.title;
+            for (const input of categoryInputs) {
+                if (input.value === expense.category) {
+                    input.checked = true;
+                    break;
+                }
+            }
+            newCategoryInput.value = '';
+            for (const input of paymentModeInputs) {
+                if (input.value === expense.paymentMode) {
+                    input.checked = true;
+                    break;
+                }
+            }
             recurringInput.checked = expense.recurring;
-            beneficiaryInput.value = expense.beneficiary;
+            for (const input of beneficiaryInputs) {
+                if (input.value === expense.beneficiary) {
+                    input.checked = true;
+                    break;
+                }
+            }
             tagsInput.value = expense.tags.join(', ');
             submitBtn.textContent = 'Update Expense';
         } else if (e.target.classList.contains('delete')) {
